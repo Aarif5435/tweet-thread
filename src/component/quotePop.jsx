@@ -51,7 +51,7 @@ const QuotePopup = ({ tweet }) => {
             </div>
           </div>
 
-          <div className="w-full overflow-auto flex-grow h-screen max-h-96 min-h-32">
+          <div className="w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-[#3E4144] scrollbar-track-[#16181C] h-screen max-h-96 min-h-32">
             <input
               type="text"
               placeholder="Add a comment"

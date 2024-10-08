@@ -39,16 +39,16 @@ export const Tweet = ({ tweet }) => {
         ))}
 
       <div className="flex justify-around p-2 border-t border-b border-b-[#302b2b] border-t-[#302b2b] text-gray-500 text-sm mt-3">
-        <div className="flex items-center space-x-1">
+        <div className="flex cursor-pointer  items-center space-x-1">
           <span>👁</span>
           <span>{stats.views}</span>
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="flex cursor-pointer  items-center space-x-1">
           <span>💬</span>
           <span>{stats.replies}</span>
         </div>
         <div  className="flex relative cursor-pointer items-center space-x-1">
-          <div onClick={()=>setQuotes(!quotes)}>
+          <div className="flex gap-1" onClick={()=>setQuotes(!quotes)}>
           <span>🔄</span>
           <span>{stats.retweets}</span>
           </div>
@@ -59,11 +59,11 @@ export const Tweet = ({ tweet }) => {
          </ul>
       </div>}
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="flex cursor-pointer  items-center space-x-1">
           <span>❤️</span>
           <span>{stats.likes}</span>
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="flex cursor-pointer  items-center space-x-1">
           <span>🔖</span>
           <span>{stats.bookmarks}</span>
         </div>
