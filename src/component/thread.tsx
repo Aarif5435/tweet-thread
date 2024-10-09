@@ -81,8 +81,9 @@ const parseTextWithMentions = (text : string) => {
             </div>
             <div className="flex justify-end">
               <button
+                disabled={!image && !replyText}
                 onClick={postReply}
-                className="bg-blue-500 text-white px-4 py-2 rounded-full mt-2 hover:bg-blue-600"
+                className={`${!image && !replyText && 'bg-[#0F4E78] hover:bg-[#0F4E78]' }  bg-blue-500 text-white px-4 py-2 rounded-full mt-2 hover:bg-blue-600`}
               >
                 Reply
               </button>

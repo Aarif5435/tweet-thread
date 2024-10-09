@@ -23,7 +23,6 @@ const QuotePopup = ({ tweet }: any) => {
   const [quoteText, setQuoteText] = useState("");
 
   const postQuoteTweet = () => {
-    if (quoteText.trim() === "") return;
     setQuoteReply([...quoteReply, { text: quoteText, image: image }]);
     setQuoteText("");
     setIsPopupOpen(false);
