@@ -3,15 +3,22 @@ import { PiImageSquare } from "react-icons/pi";
 import { Tweet } from "./tweet";
 import { PopupContext } from "../contextStates/popupState";
 import { handleImageUpload, handlePaste } from "../utils/handlePage";
-import karanImage from "../assets/karan.png";
+// import karanImage from "../assets/karan.png";
 
-const QuotePopup = ({ tweet }) => {
+const QuotePopup = ({ tweet }: any) => {
   const {
     setIsPopupOpen,
     setQuoteReply,
     quoteReply,
     setIsQuoteOpen,
-  } = useContext(PopupContext);
+  } = useContext(PopupContext)|| {
+    isPopupOpen: false,
+    setIsPopupOpen: () => {},
+    quoteReply: [],
+    setQuoteReply: () => {},
+    isQuoteOpen: false,
+    setIsQuoteOpen: () => {},
+};
   const [image, setImage] = useState();
   const [quoteText, setQuoteText] = useState("");
 
@@ -23,13 +30,12 @@ const QuotePopup = ({ tweet }) => {
     setIsQuoteOpen(true);
   };
 
-  console.log('quoteReply', quoteReply)
 
   return (
     <div className="relative">
-      <div className="fixed inset-0 bg-[#15202b] bg-opacity-50 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-[#15202b] p-6 bg-opacity-50 flex items-center justify-center z-50">
         <div
-          className="bg-[#000000] p-6 rounded-lg w-3/6 max-w-lg shadow-lg relative text-white"
+          className="bg-[#000000] p-6 rounded-lg w-96 xl:w-3/6 md:w-3/5 max-w-lg shadow-lg relative text-white"
           onClick={(e) => e.stopPropagation()}
         >
           <button
@@ -41,7 +47,7 @@ const QuotePopup = ({ tweet }) => {
 
           <div className="flex items-center mb-4">
             <img
-              src={karanImage}
+              src="../assets/karan.png"
               alt="User"
               className="rounded-full w-10 h-10 mr-3"
             />
@@ -87,9 +93,12 @@ const QuotePopup = ({ tweet }) => {
             <button className="text-blue-500 flex items-center space-x-2 hover:underline">
               <PiImageSquare
                 size={18}
-                onClick={() =>
-                  document.getElementById("quoteImageUploader").click()
-                }
+                onClick={() =>{
+                  const element = document.getElementById("quoteImageUploader");
+                  if(element){
+                    element.click()
+                  }
+                }}
               />
               <span>Everyone can reply</span>
             </button>

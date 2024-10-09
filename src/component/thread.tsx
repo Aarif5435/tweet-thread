@@ -1,21 +1,31 @@
 import React, { useContext, useState } from "react";
-import karanImage from "../assets/karan.png";
 import { PiImageSquare } from "react-icons/pi";
-import { Tweet } from "./tweet";
-import QuotePopup from "./quotePop";
 import { PopupContext } from "../contextStates/popupState";
-import { handleImageUpload, handlePaste, parseTextWithMentions } from "../utils/handlePage";
+import { handleImageUpload, handlePaste } from "../utils/handlePage";
 import { QuotePost } from "./quotePost";
+import QuotePopup from "./quotePop";
+import { Tweet } from "./tweet";
 
+type RepliesType = {
+  text: string;
+  image: File | null | any;
+}
 
-const Thread = ({ tweet }) => {
+const Thread = ({ tweet }: any) => {
 
   const [replyText, setReplyText] = useState("");
-  const [replies, setReplies] = useState([]);
+  const [replies, setReplies] = useState<RepliesType[]>([]);
   const [image, setImage] = useState(null);
-  const { isPopupOpen, isQuoteOpen } = useContext(PopupContext);
+  const { isPopupOpen, isQuoteOpen } = useContext(PopupContext) || {
+    isPopupOpen: false,
+    setIsPopupOpen: () => {},
+    quoteReply: [],
+    setQuoteReply: () => {},
+    isQuoteOpen: false,
+    setIsQuoteOpen: () => {},
+};
 
-  const handleReplyChange = (event) => {
+  const handleReplyChange = (event: any) => {
     setReplyText(event.target.value);
   };
 
@@ -24,6 +34,23 @@ const Thread = ({ tweet }) => {
     setReplies([...replies, { text: replyText, image: image }]);
     setReplyText("");
     setImage(null);
+  };
+
+  
+const parseTextWithMentions = (text : string) => {
+    const mentionRegex = /@(\w+)/g;
+    const parts = text.split(mentionRegex);
+  
+    return parts.map((part, index) => {
+      if (index % 2 === 1) {
+        return (
+          <span key={index} className="text-blue-500 font-semibold">
+            @{part}
+          </span>
+        );
+      }
+      return part;
+    });
   };
 
   return (
@@ -39,7 +66,7 @@ const Thread = ({ tweet }) => {
           <div className="mt-3 p-2 border-b border-b-[#302b2b]">
             <div className="flex items-center mb-3">
               <img
-                src={karanImage}
+                src="/assets/karan.png"
                 alt="Karan"
                 className="w-12 h-12 rounded-full mr-3"
               />
@@ -61,7 +88,13 @@ const Thread = ({ tweet }) => {
               </button>
             </div>
             <span
-              onClick={() => document.getElementById("imageUploader").click()}
+              onClick={() => {
+                const element = document.getElementById("imageUploader")!;
+                if(element){
+                  element.click()
+                }
+              
+              }}
               className="text-blue-500 cursor-pointer"
             >
               <PiImageSquare size={15} />
@@ -91,7 +124,7 @@ const Thread = ({ tweet }) => {
                 <div className="mb-3" key={index}>
                   <div className="flex items-start mb-3 relative">
                     <img
-                      src={karanImage}
+                      src="../assets/karan.png"
                       alt="Karan"
                       className="w-12 h-12 rounded-full mr-3"
                     />
@@ -108,7 +141,7 @@ const Thread = ({ tweet }) => {
                       {reply?.image && (
                         <img
                           src={reply.image}
-                          alt="Reply Image"
+                          alt="Reply"
                           className="w-80 h-80 object-cover rounded-lg mt-2"
                         />
                       )}

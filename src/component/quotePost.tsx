@@ -1,12 +1,33 @@
 import { useContext } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { PopupContext } from "../contextStates/popupState";
-import karanImage from "../assets/karan.png";
-import { parseTextWithMentions } from "../utils/handlePage";
 import { Tweet } from "./tweet";
 
-export const QuotePost = ({tweet}) => {
-  const { quoteReply, setIsQuoteOpen } = useContext(PopupContext);
+export const QuotePost = ({tweet}: any) => {
+  const { quoteReply, setIsQuoteOpen } = useContext(PopupContext) || {
+    isPopupOpen: false,
+    setIsPopupOpen: () => {},
+    quoteReply: [],
+    setQuoteReply: () => {},
+    isQuoteOpen: false,
+    setIsQuoteOpen: () => {},
+};
+
+const parseTextWithMentions = (text : string) => {
+  const mentionRegex = /@(\w+)/g;
+  const parts = text.split(mentionRegex);
+
+  return parts.map((part, index) => {
+    if (index % 2 === 1) {
+      return (
+        <span key={index} className="text-blue-500 font-semibold">
+          @{part}
+        </span>
+      );
+    }
+    return part;
+  });
+};
 
 
   return (
@@ -20,7 +41,7 @@ export const QuotePost = ({tweet}) => {
           <div className="mt-4" key={index}>
             <div className="flex items-start mb-3 relative">
               <img
-                src={karanImage}
+                src="../assets/karan.png"
                 alt="Karan"
                 className="w-12 h-12 rounded-full mr-3"
               />
@@ -37,7 +58,7 @@ export const QuotePost = ({tweet}) => {
                 {item?.image && (
                   <img
                     src={item.image}
-                    alt="Reply Image"
+                    alt="Reply"
                     className="w-80 h-80 object-cover rounded-lg mt-2"
                   />
                 )}

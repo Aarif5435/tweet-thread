@@ -1,20 +1,25 @@
 import React, { useContext, useState } from "react";
-import timImage from "../assets/tim.png";
-import postImage from "../assets/tweetImage.jpeg";
 import { PiPencilSimple } from "react-icons/pi";
 import { TfiViewList } from "react-icons/tfi";
 import { PopupContext } from "../contextStates/popupState";
 
-export const Tweet = ({ tweet }) => {
+export const Tweet = ({ tweet }:any) => {
   const { user, content, media, stats } = tweet;
   const [quotes, setQuotes] = useState(false);
-  const { setIsPopupOpen, setIsQuoteOpen } = useContext(PopupContext);
+  const { setIsPopupOpen, setIsQuoteOpen } = useContext(PopupContext) || {
+    isPopupOpen: false,
+    setIsPopupOpen: () => {},
+    quoteReply: [],
+    setQuoteReply: () => {},
+    isQuoteOpen: false,
+    setIsQuoteOpen: () => {},
+};;
 
   return (
     <div>
       <div className="flex items-center mb-3">
         <img
-          src={timImage}
+          src="/assets/tim.png"
           alt={`${user.display_name}`}
           className="w-12 h-12 rounded-full mr-3"
         />
@@ -29,10 +34,10 @@ export const Tweet = ({ tweet }) => {
       <p className="text-white whitespace-pre-wrap">{content}</p>
 
       {media &&
-        media.map((item, index) => (
+        media.map((item: any, index: number) => (
           <img
             key={index}
-            src={postImage}
+            src="/assets/tweetImage.jpeg"
             alt="Tweet Media"
             className="rounded-lg mt-3 w-full"
           />
